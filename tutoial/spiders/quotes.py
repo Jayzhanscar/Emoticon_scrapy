@@ -26,7 +26,7 @@ class QuotesSpider(scrapy.Spider):
         
         url = 'https://www.doutula.com/photo/list/?page=' + str(QuotesSpider.count)
         # yield scrap.Request(url=url, callback=self.parse)
-        if QuotesSpider.count < 10:
+        if QuotesSpider.count < 2000:
             yield scrapy.Request(url=url, callback=self.parse)
         else:
             return 'end'
