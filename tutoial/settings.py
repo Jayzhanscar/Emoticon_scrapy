@@ -67,8 +67,12 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'tutoial.pipelines.TextPipeline': 300,  # 数字越小,越靠近引擎
-    'tutoial.pipelines.MongoPipeline': 400
+    # 数字越小,越靠近引擎
+    # 'tutoial.pipelines.TextPipeline': 300,   # 文本处理
+    'tutoial.pipelines.ImagePipeline': 301,  # 图片处理
+    'tutoial.pipelines.MongoPipeline': 302,  # mongodb处理
+    # 'tutoial.pipelines.MysqlPipeline': 303,
+    
 }
 
 MONGO_URI = 'localhost'
@@ -94,11 +98,13 @@ MONGO_DB = 'imgs'
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
+# 图片下载地址
+IMAGES_STORE = './images'
 
 # Mysql配置
 
-MYSQL_HOST = '93.69.56.70'
+MYSQL_HOST = '39.96.56.70'
 POST = 3306
 DATA_NAME = 'scrapy_emj'
-USER = 'root'
+USER = 'yiming'
 PASSWORD = 'qazwsx123'

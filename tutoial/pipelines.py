@@ -8,6 +8,8 @@
 from scrapy.exceptions import DropItem
 import pymongo
 import pymysql
+from scrapy.pipelines.images import ImagesPipeline
+from scrapy import Request
 
 
 class TextPipeline(object):
@@ -84,6 +86,7 @@ class MysqlPipeline(object):
         self.db = None
         self.cursor = None
         self.client = None
+        self.tables = ''
     
     @classmethod
     def from_crawler(cls, crawler):
@@ -104,10 +107,32 @@ class MysqlPipeline(object):
         data = dict(item)
         keys = ','.join(data.keys())
         values = ','.join['%s'] * len(data)
-        sql = 'insert into %s (%s) values (%s)' %(item.table, keys, values)
+        sql = 'insert into %s (%s) values (%s)' % (item.table, keys, values)
         self.cursor.execute(sql, tuple(data.values()))
         self.db.commit()
         return item
     
     def close_spider(self, spider):
         self.client.close()
+
+
+class ImagePipeline(ImagesPipeline):
+    """ 继承Scrapy imagePipeline 类 """
+    
+    def file_path(self, request, response=None, info=None):
+        url = request.url
+        file_name = url.split('/')[-1]
+        
+        return file_name
+    
+    def item_completed(self, results, item, info):
+        image_paths = [x['path'] for ok, x in results if ok]
+        if not image_paths:
+            raise DropItem('image download failed')
+        
+        return item
+    
+    def get_media_requests(self, item, info):
+
+        yield Request(item['path'])
+
