@@ -18,5 +18,6 @@ import scrapy
 
 class ImgItem(scrapy.Item):
     """ 保存表情包文件地址 """
+    image_urls = scrapy.Field()
     title = scrapy.Field()
     path = scrapy.Field()

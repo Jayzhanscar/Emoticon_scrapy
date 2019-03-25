@@ -69,7 +69,7 @@ DOWNLOADER_MIDDLEWARES = {
 ITEM_PIPELINES = {
     # 数字越小,越靠近引擎
     # 'tutoial.pipelines.TextPipeline': 300,   # 文本处理
-    'tutoial.pipelines.ImagePipeline': 301,  # 图片处理
+    'tutoial.pipelines.ImagePipeline': 300,  # 图片处理
     'tutoial.pipelines.MongoPipeline': 302,  # mongodb处理
     # 'tutoial.pipelines.MysqlPipeline': 303,
     

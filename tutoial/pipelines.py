@@ -118,9 +118,11 @@ class MysqlPipeline(object):
 
 class ImagePipeline(ImagesPipeline):
     """ 继承Scrapy imagePipeline 类 """
+    # TODO 未完成下载
     
     def file_path(self, request, response=None, info=None):
         url = request.url
+        print('this is url', url)
         file_name = url.split('/')[-1]
         
         return file_name
@@ -129,10 +131,11 @@ class ImagePipeline(ImagesPipeline):
         image_paths = [x['path'] for ok, x in results if ok]
         if not image_paths:
             raise DropItem('image download failed')
-        
+
+        item['image_paths'] = image_paths
         return item
     
     def get_media_requests(self, item, info):
-
+        
         yield Request(item['path'])
 
